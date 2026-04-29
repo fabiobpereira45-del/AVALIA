@@ -145,7 +145,7 @@ export default function HomePage() {
                   Plataforma de Alta Performance
                 </div>
                 <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]">
-                  AVALIA<br />
+                  AVALIA <span className="text-emerald-neon">PRO</span><br />
                   <span className="text-emerald-neon text-4xl md:text-5xl">PROVAS & GESTÃO</span>
                 </h1>
                 <div className="h-2 w-24 bg-emerald-neon rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
