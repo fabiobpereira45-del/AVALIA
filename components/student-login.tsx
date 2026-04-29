@@ -155,8 +155,18 @@ export function StudentLogin({ onLogin, onResult, onBack, preloadedAssessmentId 
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-vibrant/10 rounded-full blur-[80px] -ml-32 -mb-32 transition-all duration-1000 group-hover:bg-orange-vibrant/20" />
           
           <div className="relative z-10">
-            <div className="h-20 w-20 bg-emerald-neon text-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-neon/20 transform transition-transform group-hover:scale-110 group-hover:rotate-3">
-               <Sparkles className="h-10 w-10" />
+            <div className="flex items-center gap-4 mx-auto mb-6">
+              <div className="h-20 w-20 bg-white rounded-3xl flex items-center justify-center shadow-2xl shadow-emerald-neon/20 transform transition-transform group-hover:scale-105 overflow-hidden p-2">
+                 <img src="/avalia-logo.png" alt="AVALIA" className="h-full w-full object-contain" />
+              </div>
+              {assessment.contracting_institution_logo && (
+                <>
+                  <div className="h-10 w-0.5 bg-white/10" />
+                  <div className="h-20 w-20 bg-white rounded-3xl flex items-center justify-center shadow-2xl shadow-white/5 transform transition-transform group-hover:scale-105 overflow-hidden p-2">
+                    <img src={assessment.contracting_institution_logo} alt="Partner" className="h-full w-full object-contain" />
+                  </div>
+                </>
+              )}
             </div>
             
             <div className="mb-4">

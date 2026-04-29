@@ -66,7 +66,7 @@ function formatCurrency(value: number): string {
 
 // ——— Modern Template Wrapper ——————————————————————————————————————————————————————
 
-function getModernTemplate(content: string, title: string, hubName?: string, pageSize: "A4" | "A5 landscape" | "receipt" = "A4"): string {
+function getModernTemplate(content: string, title: string, hubName?: string, pageSize: "A4" | "A5 landscape" | "receipt" = "A4", branding?: { logo?: string, name?: string }): string {
   const isReceipt = pageSize === "receipt";
   const bodyClass = isReceipt ? "receipt-mode" : "";
   const pageValue = isReceipt ? "A4" : pageSize;
@@ -203,10 +203,16 @@ function getModernTemplate(content: string, title: string, hubName?: string, pag
 </head>
 <body class="${bodyClass}">
     <div class="header">
-        <img src="${AVALIA_LOGO}" class="header-logo" alt="AVALIA Logo" />
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="${AVALIA_LOGO}" class="header-logo" alt="AVALIA Logo" />
+            ${branding?.logo ? `
+                <div style="width: 2px; height: 40px; background: #e2e8f0;"></div>
+                <img src="${branding.logo}" class="header-logo" style="height: 50px;" alt="Partner Logo" />
+            ` : ''}
+        </div>
         <div class="header-info">
-            <div class="institution-name">AVALIA — Inteligência em Gestão de Provas</div>
-            <div class="hub-name">${hubName || "Plataforma de Alta Performance"}</div>
+            <div class="institution-name">${branding?.name ? branding.name : 'AVALIA — Gestão de Provas'}</div>
+            <div class="hub-name">${hubName || (branding?.name ? 'Parceiro AVALIA' : "Plataforma de Alta Performance")}</div>
         </div>
     </div>
     
@@ -649,7 +655,10 @@ export function printStudentPDF({ submission, assessment, questions }: { submiss
     ${rows || '<p>Nenhuma questão respondida.</p>'}
   `
 
-  safePrint(getModernTemplate(statsHTML, `Revisão de Prova - ${submission?.studentName || 'Aluno'}`, hubName), existingWin)
+  safePrint(getModernTemplate(statsHTML, `Revisão de Prova - ${submission?.studentName || 'Aluno'}`, hubName, "A4", {
+      logo: assessment?.contracting_institution_logo,
+      name: assessment?.contracting_institution_name
+  }), existingWin)
 }
 
 export function printAnswerKeyPDF({ assessment, questions }: { assessment: Assessment, questions: Question[] }, hubName?: string, existingWin?: Window | null): void {
@@ -677,7 +686,10 @@ export function printAnswerKeyPDF({ assessment, questions }: { assessment: Asses
     ${rows || '<p>Nenhuma questão na prova.</p>'}
   `
   
-  safePrint(getModernTemplate(content, `Gabarito - ${assessment?.title || 'Prova'}`, hubName), existingWin)
+  safePrint(getModernTemplate(content, `Gabarito: ${assessment.title}`, hubName, "A4", {
+      logo: assessment?.contracting_institution_logo,
+      name: assessment?.contracting_institution_name
+  }), existingWin)
 }
 
 export function printProfessorsPDF(professors: ProfessorAccount[], assignments: ProfessorDiscipline[], disciplines: Discipline[], hubName?: string, existingWin?: Window | null): void {
@@ -759,7 +771,10 @@ export function printBlankAssessmentPDF({ assessment, questions }: { assessment:
       <h2>Avaliação Acadêmica</h2>
       ${rows || '<p>Nenhuma questão na avaliação.</p>'}
     `
-    safePrint(getModernTemplate(headerHtml, assessment?.title || "Avaliação", hubName), existingWin)
+    safePrint(getModernTemplate(headerHtml, assessment?.title || "Avaliação", hubName, "A4", {
+      logo: assessment?.contracting_institution_logo,
+      name: assessment?.contracting_institution_name
+    }), existingWin)
 }
 
 export function printOverviewPDF({ assessments, submissions, questions }: { assessments: Assessment[], submissions: StudentSubmission[], questions: Question[] }, hubName?: string, existingWin?: Window | null): void {

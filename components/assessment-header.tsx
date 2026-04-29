@@ -23,16 +23,19 @@ export function AssessmentHeader({
         <div className="flex items-center justify-between gap-4">
           {/* Logo + Brand */}
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl shadow-lg shrink-0 overflow-hidden bg-white border-2 border-emerald-neon/20">
-              <img src="/avalia-logo.png" alt="AVALIA" className="h-full w-full object-contain p-1" />
-            </div>
-            <div>
-              <p className="text-[10px] font-black text-emerald-neon uppercase tracking-[0.2em] hidden sm:block">
-                Plataforma de Avaliações
-              </p>
-              <p className="text-xl font-black leading-tight text-white tracking-tighter">
-                AVALIA <span className="text-emerald-neon">PRO</span>
-              </p>
+            <div className="flex items-center gap-3 bg-white/10 p-1.5 rounded-2xl border border-white/10 backdrop-blur-sm">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl shadow-lg shrink-0 overflow-hidden bg-white">
+                <img src="/avalia-logo.png" alt="AVALIA" className="h-full w-full object-contain p-1" />
+              </div>
+              {/* Espaço para Logo do Parceiro se necessário futuramente ou via Props */}
+              <div className="hidden sm:flex flex-col pr-2">
+                <p className="text-[9px] font-black text-emerald-neon uppercase tracking-[0.2em] leading-none mb-1">
+                  Selo de Qualidade
+                </p>
+                <p className="text-sm font-black leading-none text-white tracking-tighter">
+                  AVALIA <span className="text-emerald-neon">PRO</span>
+                </p>
+              </div>
             </div>
           </div>
 

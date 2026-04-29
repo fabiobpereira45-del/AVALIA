@@ -12,7 +12,7 @@ export interface Discipline { id: string; name: string; description?: string | n
 export interface StudyMaterial { id: string; disciplineId: string; title: string; description?: string; fileUrl: string; createdAt: string }
 export interface GradingSettings { id: string; pointsPerPresence: number; onlinePresencePoints: number; interactionPoints: number; bookActivityPoints: number; passingAverage: number; totalDivisor: number; updatedAt: string; }
 export interface Question { id: string; disciplineId: string; type: QuestionType; text: string; choices: Choice[]; pairs?: MatchingPair[]; correctAnswer: string; points: number; createdAt: string }
-export interface Assessment { id: string; title: string; disciplineId: string; professor: string; institution: string; questionIds: string[]; pointsPerQuestion: number; totalPoints: number; openAt: string | null; closeAt: string | null; isPublished: boolean; archived: boolean; shuffleVariants?: boolean; timeLimitMinutes?: number | null; logoBase64?: string; rules?: string; releaseResults?: boolean; modality?: "public" | "private"; createdAt: string }
+export interface Assessment { id: string; title: string; disciplineId: string; professor: string; institution: string; questionIds: string[]; pointsPerQuestion: number; totalPoints: number; openAt: string | null; closeAt: string | null; isPublished: boolean; archived: boolean; shuffleVariants?: boolean; timeLimitMinutes?: number | null; logoBase64?: string; contracting_institution_name?: string; contracting_institution_logo?: string; rules?: string; releaseResults?: boolean; modality?: "public" | "private"; createdAt: string }
 export interface StudentAnswer { questionId: string; answer: string }
 export interface StudentSubmission { id: string; assessmentId: string; studentName: string; studentEmail: string; answers: StudentAnswer[]; score: number; totalPoints: number; percentage: number; submittedAt: string; timeElapsedSeconds: number; focusLostCount?: number }
 export interface ProfessorAccount { id: string; name: string; email: string; passwordHash: string; role: "master" | "professor"; avatar_url?: string | null; bio?: string | null; createdAt: string; active?: boolean; pix_key?: string | null; bank_info?: string | null; }
@@ -442,6 +442,8 @@ function mapAssessment(row: any): Assessment {
     shuffleVariants: row.shuffle_variants,
     timeLimitMinutes: row.time_limit_minutes,
     logoBase64: row.logo_base64,
+    contracting_institution_name: row.contracting_institution_name,
+    contracting_institution_logo: row.contracting_institution_logo,
     rules: row.rules,
     releaseResults: row.release_results,
     modality: cleanModality,
@@ -748,7 +750,11 @@ export async function getAssessmentById(id: string): Promise<Assessment | null> 
 
 export async function addAssessment(data: Omit<Assessment, "id" | "createdAt" | "releaseResults" | "archived">): Promise<Assessment> {
   const a = { ...data, id: uid(), createdAt: new Date().toISOString(), releaseResults: false, archived: false }
-  const dbData = { id: a.id, title: a.title, discipline_id: a.disciplineId, professor: a.professor, institution: a.institution, question_ids: a.questionIds, points_per_question: a.pointsPerQuestion, total_points: a.totalPoints, open_at: a.openAt, close_at: a.closeAt, is_published: a.isPublished, shuffle_variants: a.shuffleVariants, time_limit_minutes: a.timeLimitMinutes, logo_base64: a.logoBase64, rules: a.rules, release_results: a.releaseResults, modality: a.modality ?? "public", created_at: a.createdAt }
+  const dbData = { id: a.id, title: a.title, discipline_id: a.disciplineId, professor: a.professor, institution: a.institution, question_ids: a.questionIds, points_per_question: a.pointsPerQuestion, total_points: a.totalPoints, open_at: a.openAt, close_at: a.closeAt, is_published: a.isPublished, shuffle_variants: a.shuffleVariants, time_limit_minutes: a.timeLimitMinutes,    logo_base64: a.logoBase64 || null,
+    contracting_institution_name: a.contracting_institution_name || null,
+    contracting_institution_logo: a.contracting_institution_logo || null,
+    rules: a.rules || null,
+    release_results: a.releaseResults, modality: a.modality ?? "public", created_at: a.createdAt }
   const supabase = createClient()
   const { error } = await supabase.from('assessments').insert(dbData)
   if (error) throw new Error(error.message)
@@ -770,8 +776,10 @@ export async function updateAssessment(id: string, data: Partial<Omit<Assessment
   if (data.isPublished !== undefined) dbData.is_published = data.isPublished
   if (data.shuffleVariants !== undefined) dbData.shuffle_variants = data.shuffleVariants
   if (data.timeLimitMinutes !== undefined) dbData.time_limit_minutes = data.timeLimitMinutes
-  if (data.logoBase64 !== undefined) dbData.logo_base64 = data.logoBase64
-  if (data.rules !== undefined) dbData.rules = data.rules
+  if (data.logoBase64 !== undefined) dbData.logo_base64 = data.logoBase64 || null
+  if (data.contracting_institution_name !== undefined) dbData.contracting_institution_name = data.contracting_institution_name || null
+  if (data.contracting_institution_logo !== undefined) dbData.contracting_institution_logo = data.contracting_institution_logo || null
+  if (data.rules !== undefined) dbData.rules = data.rules || null
   if (data.releaseResults !== undefined) dbData.release_results = data.releaseResults
   if (data.modality !== undefined) dbData.modality = data.modality
   if (data.archived !== undefined) dbData.archived = data.archived

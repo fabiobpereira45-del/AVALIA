@@ -47,11 +47,13 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
   const [saving, setSaving] = useState(false)
 
   // Step 1
-  const [title, setTitle] = useState("")
-  const [disciplineId, setDisciplineId] = useState("")
+  const [title, setTitle] = useState(assessment?.title || "")
+  const [disciplineId, setDisciplineId] = useState(assessment?.disciplineId || "")
   const [disciplines, setDisciplines] = useState<Discipline[]>([])
-  const [logoBase64, setLogoBase64] = useState("")
-  const [rules, setRules] = useState("")
+  const [logoBase64, setLogoBase64] = useState(assessment?.logoBase64 || "")
+  const [contractingInstitutionName, setContractingInstitutionName] = useState(assessment?.contracting_institution_name || "")
+  const [contractingInstitutionLogo, setContractingInstitutionLogo] = useState(assessment?.contracting_institution_logo || "")
+  const [rules, setRules] = useState(assessment?.rules || "")
   const [modality, setModality] = useState<"public" | "private">("public")
 
   // Step 2
@@ -79,6 +81,8 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
         setTitle(assessment.title)
         setDisciplineId(assessment.disciplineId)
         setLogoBase64(assessment.logoBase64 ?? "")
+        setContractingInstitutionName(assessment.contracting_institution_name ?? "")
+        setContractingInstitutionLogo(assessment.contracting_institution_logo ?? "")
         setRules(assessment.rules ?? "")
         setModality(assessment.modality ?? "public")
         setPointsPerQuestion(assessment.pointsPerQuestion || 0)
@@ -91,6 +95,8 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
         setTitle("")
         setDisciplineId(discs[0]?.id ?? "")
         setLogoBase64("")
+        setContractingInstitutionName("")
+        setContractingInstitutionLogo("")
         setRules("")
         setModality("public")
         setFormats(["multiple-choice"])
@@ -155,6 +161,16 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
     const reader = new FileReader()
     reader.onload = (event) => {
       setLogoBase64(event.target?.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  function handleContractingLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setContractingInstitutionLogo(event.target?.result as string)
     }
     reader.readAsDataURL(file)
   }
@@ -240,6 +256,8 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
             disciplineId,
             professor: professorName,
             logoBase64,
+            contracting_institution_name: contractingInstitutionName.trim(),
+            contracting_institution_logo: contractingInstitutionLogo,
             rules: rules.trim(),
             questionIds: finalIds,
             pointsPerQuestion,
@@ -252,8 +270,10 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
             title: title.trim(),
             disciplineId,
             professor: professorName,
-            institution: "AVALIA — Gestão de Provas",
+            institution: "AVALIA",
             logoBase64,
+            contracting_institution_name: contractingInstitutionName.trim(),
+            contracting_institution_logo: contractingInstitutionLogo,
             rules: rules.trim(),
             questionIds: finalIds,
             pointsPerQuestion,
@@ -359,6 +379,42 @@ export function AssessmentBuilder({ open, assessment, onClose, onSave }: Props) 
                 </div>
                 <p className="text-[11px] text-muted-foreground">Esta imagem aparecerá apenas no cabeçalho ao imprimir a prova física.</p>
               </div>
+
+              {/* Branding da Instituição Contratante */}
+              <div className="p-4 rounded-xl border-2 border-dashed border-primary/20 bg-primary/5 flex flex-col gap-4">
+                <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                  <ShieldCheck className="h-4 w-4" /> Instituição Contratante (Parceiro)
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="contracting-name">Nome da Instituição</Label>
+                  <Input 
+                    id="contracting-name"
+                    value={contractingInstitutionName}
+                    onChange={(e) => setContractingInstitutionName(e.target.value)}
+                    placeholder="Ex: Faculdade Teológica Internacional"
+                    className="bg-white"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="contracting-logo">Logo da Instituição</Label>
+                  <div className="flex items-center gap-3">
+                    <Input
+                      id="contracting-logo"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleContractingLogoUpload}
+                      className="flex-1 bg-white"
+                    />
+                    {contractingInstitutionLogo && (
+                      <div className="w-10 h-10 border rounded-md overflow-hidden flex items-center justify-center bg-white shadow-sm">
+                        <img src={contractingInstitutionLogo} alt="Contracting logo preview" className="max-w-full max-h-full object-contain" />
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-[10px] text-muted-foreground">Se adicionada, esta logo aparecerá ao lado da logo AVALIA.</p>
+                </div>
+              </div>
+
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="assess-rules">Regras da Prova (Opcional)</Label>
                 <Textarea

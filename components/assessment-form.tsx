@@ -344,8 +344,18 @@ export function AssessmentForm({ session, onSubmit, onBack }: Props) {
         {/* Row 1: Context & Meta */}
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="h-9 w-9 shrink-0 flex items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600">
-              <BookOpenCheck className="h-4.5 w-4.5" />
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="h-10 w-10 shrink-0 flex items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm overflow-hidden p-1">
+                <img src="/avalia-logo.png" alt="AVALIA" className="h-full w-full object-contain" />
+              </div>
+              {assessment.contracting_institution_logo && (
+                <>
+                  <div className="h-6 w-[1.5px] bg-slate-200 mx-0.5" />
+                  <div className="h-10 w-10 shrink-0 flex items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm overflow-hidden p-1">
+                    <img src={assessment.contracting_institution_logo} alt="Partner" className="h-full w-full object-contain" />
+                  </div>
+                </>
+              )}
             </div>
             <div className="min-w-0">
               <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 line-clamp-1 mb-0.5">

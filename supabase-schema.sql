@@ -126,6 +126,8 @@ CREATE TABLE IF NOT EXISTS public.assessments (
   rules               TEXT,
   release_results     BOOLEAN NOT NULL DEFAULT FALSE,
   modality            TEXT NOT NULL DEFAULT 'public',
+  contracting_institution_name TEXT,
+  contracting_institution_logo TEXT,
   created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

@@ -143,13 +143,17 @@ export function AssessmentResult({ submission, onBack }: Props) {
            <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/20 rounded-full blur-[60px] -ml-24 -mb-24" />
 
            <div className="relative z-10 flex flex-col items-center gap-6">
-              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-white/20 backdrop-blur-md shadow-xl border border-white/30 ring-4 ring-white/10">
-                {passed && resultsReleased ? (
-                   <Award className="h-10 w-10 text-accent-gold" />
-                ) : !resultsReleased ? (
-                   <Clock className="h-10 w-10 text-white" />
-                ) : (
-                   <Award className="h-10 w-10 text-white/80" />
+              <div className="flex items-center gap-4">
+                <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-white shadow-xl transform transition-transform group-hover:scale-105 overflow-hidden p-2">
+                  <img src="/avalia-logo.png" alt="AVALIA" className="h-full w-full object-contain" />
+                </div>
+                {assessment.contracting_institution_logo && (
+                  <>
+                    <div className="h-10 w-0.5 bg-white/10" />
+                    <div className="h-20 w-20 bg-white rounded-3xl flex items-center justify-center shadow-2xl transform transition-transform group-hover:scale-105 overflow-hidden p-2">
+                      <img src={assessment.contracting_institution_logo} alt="Partner" className="h-full w-full object-contain" />
+                    </div>
+                  </>
                 )}
               </div>
 
