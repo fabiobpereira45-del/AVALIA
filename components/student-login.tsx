@@ -147,6 +147,19 @@ export function StudentLogin({ onLogin, onResult, onBack, preloadedAssessmentId 
 
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto w-full gap-8 relative z-10">
+      {onBack && (
+        <div className="w-full flex justify-start mb-2">
+           <button 
+            type="button" 
+            onClick={onBack} 
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all font-black text-xs uppercase tracking-widest backdrop-blur-sm group"
+          >
+            <ArrowRight className="h-4 w-4 rotate-180 transition-transform group-hover:-translate-x-1" />
+            Sair / Voltar
+          </button>
+        </div>
+      )}
+
       {/* Premium Hero Card */}
       {assessment ? (
         <div className="w-full rounded-[2.5rem] bg-[#020617] text-white p-10 flex flex-col items-center gap-8 text-center shadow-2xl border border-white/5 relative overflow-hidden group">
@@ -317,18 +330,6 @@ export function StudentLogin({ onLogin, onResult, onBack, preloadedAssessmentId 
                 </button>
               </div>
             </form>
-
-            {onBack && (
-              <div className="absolute top-6 right-6">
-                <button 
-                  type="button" 
-                  onClick={onBack} 
-                  className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-800 transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-100"
-                >
-                  Sair
-                </button>
-              </div>
-            )}
           </div>
         )}
       </div>
