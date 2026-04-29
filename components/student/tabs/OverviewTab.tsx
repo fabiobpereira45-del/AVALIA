@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { AlertCircle, Clock, CheckCircle2, Library, FileText, BookOpenCheck, MessageSquare } from "lucide-react"
+import { AlertCircle, Clock, CheckCircle2, Library, FileText, BookOpenCheck, MessageSquare, Trophy, Zap, Star } from "lucide-react"
 import type { StudentProfile } from "@/lib/store"
 import { cn } from "@/lib/utils"
 
@@ -22,19 +22,33 @@ export function OverviewTab({ profile, onTabChange }: OverviewTabProps) {
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full -mr-40 -mt-40 blur-[100px] opacity-40 bg-emerald-neon/30" />
           <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full -ml-32 -mb-32 blur-[80px] opacity-20 bg-orange-vibrant/20" />
           <div className="relative z-10 flex flex-col h-full justify-between gap-6">
-            <div>
-              <h3 className="text-4xl font-black mb-4 leading-tight tracking-tighter">Prepare-se para <br /> sua Próxima Prova!</h3>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-neon/10 border border-emerald-neon/20 w-fit">
+                <Zap className="h-3.5 w-3.5 text-emerald-neon fill-emerald-neon" />
+                <span className="text-[10px] font-black text-emerald-neon uppercase tracking-widest">Temporada 2026</span>
+              </div>
+              <h3 className="text-4xl font-black mb-2 leading-tight tracking-tighter">Seu Próximo <br /> Desafio!</h3>
               <p className="text-slate-300 text-lg max-w-md leading-relaxed font-medium">
-                Olá, {profile.name.split(' ')[0]}. Bem-vindo ao AVALIA — Sua plataforma definitiva de gestão acadêmica e exames.
+                Complete enigmas e quizes para desbloquear novas etapas e conquistar pontos de XP.
               </p>
             </div>
-            <div className="flex gap-4">
-              <Button className="vibrant-button-emerald h-14 px-10 text-lg" onClick={() => onTabChange("exams")}>
-                Acessar Provas
-              </Button>
-              <Button variant="ghost" className="text-white hover:bg-white/5 font-bold rounded-2xl h-14 px-8 border border-white/10" onClick={() => onTabChange("materials")}>
-                Materiais
-              </Button>
+            
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-end mb-1">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Progresso do Nível</span>
+                <span className="text-xs font-black text-emerald-neon">Lvl 1 • 0 / 1000 XP</span>
+              </div>
+              <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10">
+                <div className="h-full bg-emerald-neon w-[5%] shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+              </div>
+              <div className="flex gap-4 mt-2">
+                <Button className="vibrant-button-emerald h-14 px-10 text-lg" onClick={() => onTabChange("exams")}>
+                  Iniciar Desafio
+                </Button>
+                <Button variant="ghost" className="text-white hover:bg-white/5 font-bold rounded-2xl h-14 px-8 border border-white/10" onClick={() => onTabChange("materials")}>
+                  Biblioteca
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -56,9 +70,9 @@ export function OverviewTab({ profile, onTabChange }: OverviewTabProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { id: "exams", label: "Minhas Provas", sub: "Avaliações Disponíveis", icon: BookOpenCheck, color: "text-emerald-neon", bg: "bg-emerald-neon/10" },
-          { id: "grades", label: "Desempenho", sub: "Notas e Boletim", icon: FileText, color: "text-orange-vibrant", bg: "bg-orange-vibrant/10" },
-          { id: "materials", label: "Biblioteca", sub: "Materiais de Estudo", icon: Library, color: "text-blue-400", bg: "bg-blue-400/10" },
+          { id: "exams", label: "Quizes Semanais", sub: "Desbloqueie XP", icon: Trophy, color: "text-emerald-neon", bg: "bg-emerald-neon/10" },
+          { id: "grades", label: "Meu Ranking", sub: "Pontos e Medalhas", icon: Star, color: "text-orange-vibrant", bg: "bg-orange-vibrant/10" },
+          { id: "materials", label: "Grimório", sub: "Material de Estudo", icon: Library, color: "text-blue-400", bg: "bg-blue-400/10" },
           { id: "chat", label: "Suporte", sub: "Dúvidas e Chat", icon: MessageSquare, color: "text-white", bg: "bg-white/10" },
         ].map((card) => (
           <button key={card.id} onClick={() => onTabChange(card.id as Tab)} className="bg-[#020617] border border-white/5 rounded-[2rem] p-8 shadow-xl hover:border-emerald-neon/40 transition-all text-left flex flex-col group relative overflow-hidden">

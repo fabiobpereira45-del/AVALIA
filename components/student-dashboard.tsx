@@ -163,7 +163,7 @@ export function StudentDashboard({ session, onBack, onLogout }: Props) {
     }
 
     const navItems: { id: Tab; label: string; icon: any }[] = [
-        { id: "overview", label: "Painel Inicial", icon: Home },
+        { id: "overview", label: "Desafios Semanais", icon: Trophy },
         { id: "exams", label: "Minhas Provas", icon: BookOpenCheck },
         { id: "grades", label: "Notas e Desempenho", icon: FileText },
         { id: "materials", label: "Material de Estudo", icon: Library },
@@ -186,7 +186,7 @@ export function StudentDashboard({ session, onBack, onLogout }: Props) {
                     />
                 </div>
                 <h2 className="text-base font-bold tracking-tight text-white">{profile.name}</h2>
-                <p className="text-[10px] text-emerald-neon uppercase tracking-[3px] font-black">Plataforma AVALIA • Aluno</p>
+                <p className="text-[10px] text-emerald-neon uppercase tracking-[3px] font-black">Jornada de Conhecimento • XP 0</p>
             </div>
 
             <ScrollArea className="flex-1 px-3">

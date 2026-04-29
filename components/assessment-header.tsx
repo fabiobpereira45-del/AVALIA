@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, LayoutDashboard, User, ClipboardList } from "lucide-react"
+import { BookOpen, LayoutDashboard, User, ClipboardList, Trophy } from "lucide-react"
 
 interface AssessmentHeaderProps {
   studentName?: string
@@ -55,10 +55,10 @@ export function AssessmentHeader({
               <button
                 onClick={onStudentAreaClick}
                 className="flex items-center gap-1.5 rounded-md bg-white/20 text-white border border-white/30 px-3 py-1.5 text-xs font-bold hover:bg-white/30 transition-colors"
-                title="Área do Aluno"
+                title="Desafios Semanais"
               >
-                <User className="h-3.5 w-3.5 shrink-0" />
-                <span className="hidden sm:inline">Área do Aluno</span>
+                <Trophy className="h-3.5 w-3.5 shrink-0" />
+                <span className="hidden sm:inline">Desafios Semanais</span>
               </button>
             )}
           </div>

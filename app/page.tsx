@@ -18,7 +18,7 @@ import {
   type StudentSession,
   type StudentSubmission,
 } from "@/lib/store"
-import { BookOpen, GraduationCap, ClipboardList, User } from "lucide-react"
+import { BookOpen, GraduationCap, ClipboardList, User, Trophy, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type View = "landing" | "public-exam-login" | "student-portal-login" | "student-assessment" | "student-result" | "professor-login" | "admin" | "student-dashboard"
@@ -182,15 +182,22 @@ export default function HomePage() {
             {/* Action Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-              {/* Área do Aluno */}
+              {/* Desafios Semanais (Antiga Área do Aluno) */}
               <button
                 onClick={() => setView("student-portal-login")}
-                className="group relative overflow-hidden bg-card border-2 border-border rounded-2xl p-6 text-left shadow-lg hover:shadow-xl hover:border-accent/40 hover:scale-[1.02] transition-all"
+                className="group relative overflow-hidden bg-card border-2 border-border rounded-2xl p-6 text-left shadow-lg hover:shadow-xl hover:border-emerald-neon/40 hover:scale-[1.02] transition-all"
               >
-                <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <User className="h-8 w-8 text-accent mb-3" />
-                <h2 className="text-xl font-extrabold mb-1 text-foreground">Área do Aluno</h2>
-                <p className="text-sm text-muted-foreground">Acesso restrito para alunos matriculados.</p>
+                <div className="absolute inset-0 bg-emerald-neon/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex justify-between items-start mb-3">
+                  <div className="p-2 rounded-xl bg-emerald-neon/10 text-emerald-neon">
+                    <Trophy className="h-6 w-6" />
+                  </div>
+                  <div className="bg-emerald-neon/10 text-emerald-neon text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest">
+                    Beta
+                  </div>
+                </div>
+                <h2 className="text-xl font-extrabold mb-1 text-foreground">Desafios Semanais</h2>
+                <p className="text-sm text-muted-foreground">Participe de quizes, enigmas e conquiste XP em sua jornada.</p>
               </button>
 
               {/* Prova Pública ou Retomar Prova */}
