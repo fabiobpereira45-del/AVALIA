@@ -63,15 +63,6 @@ export interface ChallengeSubmission {
   earnedXP: number
   completedAt: string
 }
-    lessonsCount: number; 
-    workload: number; 
-    startDate?: string; 
-    endDate?: string; 
-    onlineClassDate?: string;
-    videoLessonDate?: string;
-    examDate?: string;
-    createdAt: string; 
-}
 export interface StudentGrade {
   id: string;
   studentIdentifier: string; // CPF or Email
